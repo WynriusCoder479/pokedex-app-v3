@@ -1,0 +1,48 @@
+import { Pokemon } from '../types/pokemons/Pokemon'
+import { Field, ID, ObjectType } from 'type-graphql'
+import {
+	BaseEntity,
+	Column,
+	CreateDateColumn,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
+} from 'typeorm'
+import { User } from './User'
+
+@ObjectType()
+@Entity()
+export class Team extends BaseEntity {
+	@Field(_type => ID)
+	@PrimaryGeneratedColumn()
+	id!: number
+
+	@Field(_type => String)
+	@Column()
+	title!: string
+
+	@Field(_type => ID)
+	@Column()
+	userId!: number
+
+	@Field(_type => User)
+	@ManyToOne(_type => User, user => user.teams)
+	user: User
+
+	@Field(_type => String, { nullable: true })
+	@Column({ nullable: true })
+	description?: string
+
+	@Field(_type => [Pokemon])
+	@Column('jsonb')
+	pokemons: Pokemon[]
+
+	@Field(_type => Date)
+	@CreateDateColumn()
+	createdAt: Date
+
+	@Field(_type => Date)
+	@UpdateDateColumn()
+	updatedAtL: Date
+}
