@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Team = void 0;
-const Pokemon_1 = require("../types/pokemons/Pokemon");
+const Pokemon_1 = require("../types/Team/Pokemon");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const User_1 = require("./User");
@@ -27,23 +27,23 @@ __decorate([
     __metadata("design:type", String)
 ], Team.prototype, "title", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(_type => type_graphql_1.ID),
+    (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Team.prototype, "userId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(_type => User_1.User),
-    (0, typeorm_1.ManyToOne)(_type => User_1.User, user => user.teams),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, user => user.teams),
     __metadata("design:type", User_1.User)
 ], Team.prototype, "user", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(_type => String, { nullable: true }),
+    (0, type_graphql_1.Field)(_type => String),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Team.prototype, "description", void 0);
 __decorate([
     (0, type_graphql_1.Field)(_type => [Pokemon_1.Pokemon]),
-    (0, typeorm_1.Column)('jsonb'),
+    (0, typeorm_1.Column)('jsonb', { nullable: true }),
     __metadata("design:type", Array)
 ], Team.prototype, "pokemons", void 0);
 __decorate([
@@ -55,7 +55,7 @@ __decorate([
     (0, type_graphql_1.Field)(_type => Date),
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], Team.prototype, "updatedAtL", void 0);
+], Team.prototype, "updatedAt", void 0);
 Team = __decorate([
     (0, type_graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)()

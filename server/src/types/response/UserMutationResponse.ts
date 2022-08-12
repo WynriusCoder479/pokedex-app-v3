@@ -1,7 +1,7 @@
 import { User } from '../../entities/User'
 import { Field, ObjectType } from 'type-graphql'
 import { IResponse } from './Response'
-import { FieldError } from '../utils/FieldError'
+import { FieldError } from '../util/FieldError'
 
 @ObjectType({ implements: IResponse })
 export class UserMutationResponse implements IResponse {
@@ -11,6 +11,12 @@ export class UserMutationResponse implements IResponse {
 
 	@Field(_type => User, { nullable: true })
 	user?: User
+
+	@Field(_type => String, { nullable: true })
+	accessToken?: string
+
+	@Field(_type => String, { nullable: true })
+	refreshToken?: string
 
 	@Field(_type => [FieldError], { nullable: true })
 	errors?: FieldError[]

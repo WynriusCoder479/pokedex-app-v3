@@ -1,33 +1,33 @@
+import 'reflect-metadata'
 import {
 	ApolloServerPluginDrainHttpServer,
 	ApolloServerPluginLandingPageGraphQLPlayground
 } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
-import MongoStore from 'connect-mongo'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
-import session from 'express-session'
 import { createServer } from 'http'
-import mongoose from 'mongoose'
-import 'reflect-metadata'
 import { buildSchema } from 'type-graphql'
 import { DataSource } from 'typeorm'
 import { Team } from './entities/Team'
 import { User } from './entities/User'
-import { UserCheckAuthResolver } from './resolvers/auth/CheckAuth'
-import { UserLoginResolver } from './resolvers/auth/Login'
-import { UserLogoutResolver } from './resolvers/auth/Logout'
-import { UserRegisterResolver } from './resolvers/auth/Register'
-import { UserCreateTeamResolver } from './resolvers/team/CreateTeam'
-import { UserGetAllTeamResolver } from './resolvers/team/GetAllTeam'
-import { UserGetSingleTeamResolver } from './resolvers/team/GetSingleTeam'
-import { UserRemoveAllTeamResolver } from './resolvers/team/RemoveAllTeam'
-import { UserRemoverMultipleTeamResolver } from './resolvers/team/RemoverMultipleTeam'
-import { UserRemoveTeamResolver } from './resolvers/team/RemoveTeam'
-import { UserUpdateTeamResolver } from './resolvers/team/UpdateTeam'
-import { Context } from './types/utils/Context'
-import { COOKIE_NAME, __prod__ } from './utils/Constants'
+import { UserCheckAuthResolver } from './resolvers/auth/UserCheckAuth'
+import { Context } from './types/util/Context'
+import { UserRegisterResolver } from './resolvers/auth/UserRegister'
+import { UserLoginResolver } from './resolvers/auth/UserLogin'
+import { UserCreateTeamResolver } from './resolvers/team/UserCreateTeam'
+import { UserUpdateTeamResolver } from './resolvers/team/UserUpdateTeam'
+import { UserGetAllTeamResolver } from './resolvers/team/UserGetAllTeam'
+import { UserGetSingleTeamResolvser } from './resolvers/team/UserGetSingleTeam'
+import { UserRemoveSingleTeamResolver } from './resolvers/team/UserRemoveSingleTeam'
+import { UserRemoveAllTeamResolver } from './resolvers/team/UserRemoveAllTeam'
+import { UserRemoveMultipleTeamResolver } from './resolvers/team/UserRemoveMultipleTeam'
+import mongoose from 'mongoose'
+import session from 'express-session'
+import { COOKIE_NAME, __prod__ } from './utils/constants'
+import MongoStore from 'connect-mongo'
+import { UserLogoutResolver } from './resolvers/auth/UserLogout'
 
 dotenv.config()
 
@@ -44,35 +44,21 @@ const main = async () => {
 		entities: [User, Team]
 	})
 
-	const mongoUrl = `mongodb+srv://${process.env.CACHE_MONGO_USERNAME}:${process.env.CACHE_MONGO_PASSWORD}@pokedex-cache.ugn8zhf.mongodb.net/?retryWrites=true&w=majority`
+	const app = express()
+
+	const mongoUrl = `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@pokedex-cache.ugn8zhf.mongodb.net/?retryWrites=true&w=majority`
 
 	await mongoose
 		.connect(mongoUrl)
-		.then(() => console.log('Connected to cache DB mongo'))
-		.catch(err => console.log(`Cache DB error: ${err}`))
-
-	appDataSource
-		.initialize()
-		.then(() => console.log('Connected to DB postgress'))
-		.catch(err => console.log(`DB connect error: ${err}`))
-
-	const app = express()
-
-	const httpServer = createServer(app)
-
-	app.use(
-		cors({
-			origin: 'http://localhost:3000',
-			credentials: true
-		})
-	)
+		.then(() => console.log('Conected to mongo DB'))
+		.catch(err => console.log(err))
 
 	app.use(
 		session({
 			name: COOKIE_NAME,
 			store: MongoStore.create({ mongoUrl }),
 			cookie: {
-				maxAge: 1000 * 60 * 60 * 24 * 7, //7 day
+				maxAge: 1000 * 60 * 60 * 24 * 7,
 				httpOnly: true,
 				secure: __prod__,
 				sameSite: 'lax'
@@ -82,6 +68,10 @@ const main = async () => {
 			resave: false
 		})
 	)
+
+	app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
+
+	const httpServer = createServer(app)
 
 	const apolloServer = new ApolloServer({
 		schema: await buildSchema({
@@ -94,10 +84,10 @@ const main = async () => {
 				UserCreateTeamResolver,
 				UserUpdateTeamResolver,
 				UserGetAllTeamResolver,
-				UserGetSingleTeamResolver,
-				UserRemoveTeamResolver,
-				UserRemoverMultipleTeamResolver,
-				UserRemoveAllTeamResolver
+				UserGetSingleTeamResolvser,
+				UserRemoveSingleTeamResolver,
+				UserRemoveAllTeamResolver,
+				UserRemoveMultipleTeamResolver
 			]
 		}),
 		plugins: [
@@ -111,15 +101,16 @@ const main = async () => {
 
 	await apolloServer
 		.start()
-		.then(() => console.log(`Apollo server started on port: ${PORT}`))
+		.then(() => console.log(`Apollo server started on port ${PORT}`))
+		.catch(err => console.log(err))
+	appDataSource
+		.initialize()
+		.then(() => console.log(`Connected to Postgress DB`))
 		.catch(err => console.log(err))
 
 	apolloServer.applyMiddleware({
 		app,
-		cors: {
-			origin: 'http://localhost:3000',
-			credentials: true
-		}
+		cors: { origin: 'http://localhost:3000', credentials: true }
 	})
 
 	await new Promise(resolve =>
@@ -131,4 +122,4 @@ const main = async () => {
 	)
 }
 
-main().catch(err => console.log(`Server error: ${err}`))
+main().catch(err => console.log(err))

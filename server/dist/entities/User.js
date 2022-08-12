@@ -35,8 +35,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(_type => [Team_1.Team], { nullable: true }),
-    (0, typeorm_1.OneToMany)(_type => Team_1.Team, team => team.user),
+    (0, typeorm_1.OneToMany)(() => Team_1.Team, team => team.user),
     __metadata("design:type", Array)
 ], User.prototype, "teams", void 0);
 __decorate([

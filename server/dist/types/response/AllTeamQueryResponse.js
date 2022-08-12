@@ -13,7 +13,7 @@ exports.AllTeamQueryResponse = void 0;
 const Team_1 = require("../../entities/Team");
 const type_graphql_1 = require("type-graphql");
 const Response_1 = require("./Response");
-const FieldError_1 = require("../utils/FieldError");
+const FieldError_1 = require("../util/FieldError");
 let AllTeamQueryResponse = class AllTeamQueryResponse {
 };
 __decorate([
@@ -21,7 +21,7 @@ __decorate([
     __metadata("design:type", Array)
 ], AllTeamQueryResponse.prototype, "teams", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(_type => [FieldError_1.FieldError], { nullable: true }),
+    (0, type_graphql_1.Field)(() => [FieldError_1.FieldError], { nullable: true }),
     __metadata("design:type", Array)
 ], AllTeamQueryResponse.prototype, "errors", void 0);
 AllTeamQueryResponse = __decorate([

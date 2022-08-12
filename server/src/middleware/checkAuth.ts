@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server-core'
-import { Context } from '../types/utils/Context'
+import { Context } from '../types/util/Context'
 import { MiddlewareFn } from 'type-graphql'
 
 export const checkAuth: MiddlewareFn<Context> = (

@@ -26,10 +26,9 @@ export class User extends BaseEntity {
 	email!: string
 
 	@Column()
-	password!: string
+	password: string
 
-	@Field(_type => [Team], { nullable: true })
-	@OneToMany(_type => Team, team => team.user)
+	@OneToMany(() => Team, team => team.user)
 	teams: Team[]
 
 	@Field(_type => Date)

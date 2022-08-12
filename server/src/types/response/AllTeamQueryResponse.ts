@@ -1,7 +1,7 @@
 import { Team } from '../../entities/Team'
 import { Field, ObjectType } from 'type-graphql'
 import { IResponse } from './Response'
-import { FieldError } from '../utils/FieldError'
+import { FieldError } from '../util/FieldError'
 
 @ObjectType({ implements: IResponse })
 export class AllTeamQueryResponse implements IResponse {
@@ -12,6 +12,6 @@ export class AllTeamQueryResponse implements IResponse {
 	@Field(_type => [Team], { nullable: true })
 	teams?: Team[]
 
-	@Field(_type => [FieldError], { nullable: true })
+	@Field(() => [FieldError], { nullable: true })
 	errors?: FieldError[]
 }

@@ -13,13 +13,21 @@ exports.UserMutationResponse = void 0;
 const User_1 = require("../../entities/User");
 const type_graphql_1 = require("type-graphql");
 const Response_1 = require("./Response");
-const FieldError_1 = require("../utils/FieldError");
+const FieldError_1 = require("../util/FieldError");
 let UserMutationResponse = class UserMutationResponse {
 };
 __decorate([
     (0, type_graphql_1.Field)(_type => User_1.User, { nullable: true }),
     __metadata("design:type", User_1.User)
 ], UserMutationResponse.prototype, "user", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(_type => String, { nullable: true }),
+    __metadata("design:type", String)
+], UserMutationResponse.prototype, "accessToken", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(_type => String, { nullable: true }),
+    __metadata("design:type", String)
+], UserMutationResponse.prototype, "refreshToken", void 0);
 __decorate([
     (0, type_graphql_1.Field)(_type => [FieldError_1.FieldError], { nullable: true }),
     __metadata("design:type", Array)
