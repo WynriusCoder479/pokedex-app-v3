@@ -1,5 +1,8 @@
 import { Box, Center, Image, Text } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 import { usePokemonDetailContext } from '../../contexts/PokemonDetailContext'
+import { setLoading } from '../../redux/slice/pokemonDetail/pokemonDetailSlice'
+import { useAppDispatch, useAppSelector } from '../../redux/store/hooks'
 
 interface pokemonProps {
 	id: number
@@ -9,6 +12,11 @@ interface pokemonProps {
 
 const PokemonCard = ({ id, name, image }: pokemonProps) => {
 	const { getPokemonDetail } = usePokemonDetailContext()
+	const isLoading = useAppSelector(
+		state => state.pokemonDetailReducer.isLoading
+	)
+	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
 
 	return (
 		<Box
@@ -26,6 +34,8 @@ const PokemonCard = ({ id, name, image }: pokemonProps) => {
 				opacity: '.5'
 			}}
 			onClick={() => {
+				!isLoading && dispatch(setLoading(true))
+				navigate('/pokemon_detail')
 				getPokemonDetail(id, name)
 			}}>
 			<Text fontSize={'2xl'} /* color={'black'} */>

@@ -25,8 +25,6 @@ const PokemonSearchField = () => {
 				const pokemonName =
 					values.name.charAt(0).toLowerCase() + values.name.slice(1)
 
-				console.log(pokemonName)
-
 				const pokemon = searchPokemonFromStore(pokemonName)
 
 				if (pokemon) {

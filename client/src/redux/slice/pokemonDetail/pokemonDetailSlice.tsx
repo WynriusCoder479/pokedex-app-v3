@@ -6,31 +6,45 @@ import {
 	PokemonSprites
 } from './types/pokemonDetail'
 
+interface PokemonDetail {
+	pokemonInfo: PokemonInfo
+	pokemonSprite: PokemonSprites
+	pokemonAbilities: PokemonAbility[]
+	pokemnMoves: PokemonMove[]
+}
+
 const pokemonDetailSlice = createSlice({
 	name: 'pokemonDetail',
 	initialState: {
-		pokemonInfo: {} as PokemonInfo,
-		pokemonSprite: {} as PokemonSprites,
-		pokemonAbilities: [] as PokemonAbility[],
-		pokemnMoves: [] as PokemonMove[]
+		pokemonDetail: {
+			pokemonInfo: {} as PokemonInfo,
+			pokemonSprite: {} as PokemonSprites,
+			pokemonAbilities: [],
+			pokemnMoves: []
+		} as PokemonDetail,
+		isLoading: true
 	},
 	reducers: {
+		setLoading: (state, action: PayloadAction<boolean>) => {
+			state.isLoading = action.payload
+		},
 		setPokemonInfo: (state, action: PayloadAction<PokemonInfo>) => {
-			state.pokemonInfo = action.payload
+			state.pokemonDetail.pokemonInfo = action.payload
 		},
 		setPokemonSprites: (state, action: PayloadAction<PokemonSprites>) => {
-			state.pokemonSprite = action.payload
+			state.pokemonDetail.pokemonSprite = action.payload
 		},
 		setPokemonAbilities: (state, action: PayloadAction<PokemonAbility[]>) => {
-			state.pokemonAbilities = action.payload
+			state.pokemonDetail.pokemonAbilities = action.payload
 		},
 		setPokemonMoves: (state, action: PayloadAction<PokemonMove[]>) => {
-			state.pokemnMoves = action.payload
+			state.pokemonDetail.pokemnMoves = action.payload
 		}
 	}
 })
 
 export const {
+	setLoading,
 	setPokemonInfo,
 	setPokemonSprites,
 	setPokemonAbilities,

@@ -8,6 +8,7 @@ import Auth from './pages/Auth'
 import Calculator from './pages/Calculator'
 import Home from './pages/Home'
 import Layout from './pages/Layout'
+import PokemonDetail from './pages/PokemonDetail'
 import Profile from './pages/Profile'
 import { Team } from './pages/Team'
 
@@ -19,6 +20,7 @@ function App() {
 					<Routes>
 						<Route path='/' element={<Layout />}>
 							<Route index element={<Home />} />
+							<Route path='pokemon_detail' element={<PokemonDetail />} />
 							<Route path='calculator' element={<Calculator />} />
 							<Route path='team' element={<ProtectedRoute />}>
 								<Route path='' element={<Team />} />

@@ -5,6 +5,7 @@ import { GET_POKEMON_DETAIL } from '../graphql/pokemonDetail/queries/GetPokemonD
 import { PokemonDetail } from '../graphql/pokemonDetail/types/PokemonDetail'
 import { PokemonSearch } from '../redux/slice/pokemon/types/Pokemons'
 import {
+	setLoading,
 	setPokemonAbilities,
 	setPokemonInfo,
 	setPokemonMoves,
@@ -98,7 +99,7 @@ const PokemonDetailContextProvider = ({
 				dispatch(setPokemonAbilities(pokemonAbilities))
 				dispatch(setPokemonMoves(pokemonsMoves))
 			}
-		})
+		}).then(_ => dispatch(setLoading(false)))
 
 		pokemon_sprite({
 			context: {
