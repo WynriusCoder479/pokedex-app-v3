@@ -1,27 +1,39 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { PokemonInfo, PokemonSprites } from './types/pokemonDetail'
+import {
+	PokemonAbility,
+	PokemonInfo,
+	PokemonMove,
+	PokemonSprites
+} from './types/pokemonDetail'
 
 const pokemonDetailSlice = createSlice({
 	name: 'pokemonDetail',
 	initialState: {
 		pokemonInfo: {} as PokemonInfo,
 		pokemonSprite: {} as PokemonSprites,
-		pokemonAbilities: [],
-		pokemnMoves: []
+		pokemonAbilities: [] as PokemonAbility[],
+		pokemnMoves: [] as PokemonMove[]
 	},
 	reducers: {
 		setPokemonInfo: (state, action: PayloadAction<PokemonInfo>) => {
 			state.pokemonInfo = action.payload
-
-			console.log(state.pokemonInfo)
 		},
 		setPokemonSprites: (state, action: PayloadAction<PokemonSprites>) => {
 			state.pokemonSprite = action.payload
-
-			console.log(state.pokemonSprite)
+		},
+		setPokemonAbilities: (state, action: PayloadAction<PokemonAbility[]>) => {
+			state.pokemonAbilities = action.payload
+		},
+		setPokemonMoves: (state, action: PayloadAction<PokemonMove[]>) => {
+			state.pokemnMoves = action.payload
 		}
 	}
 })
 
-export const { setPokemonInfo, setPokemonSprites } = pokemonDetailSlice.actions
+export const {
+	setPokemonInfo,
+	setPokemonSprites,
+	setPokemonAbilities,
+	setPokemonMoves
+} = pokemonDetailSlice.actions
 export const pokemonDetailReducer = pokemonDetailSlice.reducer

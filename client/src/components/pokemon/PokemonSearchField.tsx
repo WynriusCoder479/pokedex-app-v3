@@ -23,7 +23,9 @@ const PokemonSearchField = () => {
 			initialValues={initialValues}
 			onSubmit={(values, { resetForm }) => {
 				const pokemonName =
-					values.name.charAt(0).toLocaleLowerCase() + values.name.slice(1)
+					values.name.charAt(0).toLowerCase() + values.name.slice(1)
+
+				console.log(pokemonName)
 
 				const pokemon = searchPokemonFromStore(pokemonName)
 

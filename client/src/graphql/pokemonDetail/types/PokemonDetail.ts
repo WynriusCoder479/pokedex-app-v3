@@ -7,12 +7,12 @@ export interface pokemonType {
 
 // pokemon ability
 export interface pokemonAbilityDetail {
+	name: string
 	pokemon_v2_abilityeffecttexts: [{ short_effect: string }]
 }
 
 export interface pokemonAbility {
-	name: string
-	pokemon_v2_ability: pokemonAbilityDetail[]
+	pokemon_v2_ability: pokemonAbilityDetail
 	is_hidden: boolean
 }
 

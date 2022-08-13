@@ -5,9 +5,15 @@ import { GET_POKEMON_DETAIL } from '../graphql/pokemonDetail/queries/GetPokemonD
 import { PokemonDetail } from '../graphql/pokemonDetail/types/PokemonDetail'
 import { PokemonSearch } from '../redux/slice/pokemon/types/Pokemons'
 import {
+	setPokemonAbilities,
 	setPokemonInfo,
+	setPokemonMoves,
 	setPokemonSprites
 } from '../redux/slice/pokemonDetail/pokemonDetailSlice'
+import {
+	PokemonAbility,
+	PokemonMove
+} from '../redux/slice/pokemonDetail/types/pokemonDetail'
 import { useAppDispatch } from '../redux/store/hooks'
 
 interface IPokemonDetailContext {
@@ -59,6 +65,38 @@ const PokemonDetailContextProvider = ({
 							: ''
 					})
 				)
+
+				const pokemonAbilities: PokemonAbility[] = []
+
+				data.pokemon_v2_pokemon_by_pk.pokemon_v2_pokemonabilities.forEach(
+					ability => {
+						pokemonAbilities.push({
+							name: ability.pokemon_v2_ability.name,
+							isHidden: ability.is_hidden,
+							effect:
+								ability.pokemon_v2_ability.pokemon_v2_abilityeffecttexts[0]
+									.short_effect
+						})
+					}
+				)
+
+				const pokemonsMoves: PokemonMove[] = []
+
+				data.pokemon_v2_pokemon_by_pk.pokemon_v2_pokemonmoves.forEach(move => {
+					pokemonsMoves.push({
+						name: move.pokemon_v2_move.name,
+						level: move.level,
+						damageClass: move.pokemon_v2_move.pokemon_v2_movedamageclass.name,
+						pp: move.pokemon_v2_move.pp,
+						power: move.pokemon_v2_move.power,
+						effect:
+							move.pokemon_v2_move.pokemon_v2_moveeffect
+								.pokemon_v2_moveeffecteffecttexts[0].short_effect
+					})
+				})
+
+				dispatch(setPokemonAbilities(pokemonAbilities))
+				dispatch(setPokemonMoves(pokemonsMoves))
 			}
 		})
 
