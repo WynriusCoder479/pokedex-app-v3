@@ -12,7 +12,9 @@ const SpriteCard = ({ sprite, title }: props) => {
 			width={'200px'}
 			rounded={'10px'}
 			textAlign={'center'}>
-			<Text fontSize={'2xl'}>{title}</Text>
+			<Text fontSize={'2xl'} color={'black'}>
+				{title}
+			</Text>
 			<Center>
 				<Image src={sprite} boxSize={'150px'} />
 			</Center>

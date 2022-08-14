@@ -37,7 +37,9 @@ const PokemonSearchField = () => {
 			}}>
 			{() => (
 				<Form>
-					<Box mx={{ lg: '400px', md: '150px', sm: '30px' }} mb={'10px'}>
+					<Box
+						mx={{ lg: '400px', md: '150px', sm: '30px', base: '20px' }}
+						mb={'10px'}>
 						<InputField
 							isSearch
 							name='name'

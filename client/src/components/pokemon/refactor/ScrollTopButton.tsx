@@ -6,8 +6,8 @@ const ScrollTopButton = () => {
 		<Link>
 			<Box
 				position='fixed'
-				bottom={{ lg: '10px', md: '50px', sm: '60px' }}
-				right={['40px', '25px', '84px', '84px', '120px']}
+				bottom={{ lg: '10px', md: '50px', sm: '60px', base: '60px' }}
+				right={'10px'}
 				zIndex={2}
 				p={'10px'}>
 				<IconButton

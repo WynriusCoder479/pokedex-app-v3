@@ -9,11 +9,13 @@ import {
 	setPokemonAbilities,
 	setPokemonInfo,
 	setPokemonMoves,
-	setPokemonSprites
+	setPokemonSprites,
+	setPokemonStat
 } from '../redux/slice/pokemonDetail/pokemonDetailSlice'
 import {
 	PokemonAbility,
-	PokemonMove
+	PokemonMove,
+	PokemonStat
 } from '../redux/slice/pokemonDetail/types/pokemonDetail'
 import { useAppDispatch } from '../redux/store/hooks'
 
@@ -74,9 +76,11 @@ const PokemonDetailContextProvider = ({
 						pokemonAbilities.push({
 							name: ability.pokemon_v2_ability.name,
 							isHidden: ability.is_hidden,
-							effect:
-								ability.pokemon_v2_ability.pokemon_v2_abilityeffecttexts[0]
-									.short_effect
+							effect: ability.pokemon_v2_ability
+								.pokemon_v2_abilityeffecttexts[0]
+								? ability.pokemon_v2_ability.pokemon_v2_abilityeffecttexts[0]
+										.short_effect
+								: `effect haven't been updated yet`
 						})
 					}
 				)
@@ -87,15 +91,29 @@ const PokemonDetailContextProvider = ({
 					pokemonsMoves.push({
 						name: move.pokemon_v2_move.name,
 						level: move.level,
+						type: move.pokemon_v2_move.pokemon_v2_type.name,
 						damageClass: move.pokemon_v2_move.pokemon_v2_movedamageclass.name,
 						pp: move.pokemon_v2_move.pp,
 						power: move.pokemon_v2_move.power,
-						effect:
-							move.pokemon_v2_move.pokemon_v2_moveeffect
-								.pokemon_v2_moveeffecteffecttexts[0].short_effect
+						accuracy: move.pokemon_v2_move.accuracy,
+						effect: move.pokemon_v2_move.pokemon_v2_moveeffect
+							.pokemon_v2_moveeffecteffecttexts[0]
+							? move.pokemon_v2_move.pokemon_v2_moveeffect
+									.pokemon_v2_moveeffecteffecttexts[0].short_effect
+							: `Move effect haven't been updated`
 					})
 				})
 
+				const pokemonStat =
+					data.pokemon_v2_pokemon_by_pk.pokemon_v2_pokemonstats.reduce(
+						(obj, item) =>
+							Object.assign(obj, {
+								[item.pokemon_v2_stat.name.replace('-', '_')]: item.base_stat
+							}),
+						{} as PokemonStat
+					)
+
+				dispatch(setPokemonStat(pokemonStat))
 				dispatch(setPokemonAbilities(pokemonAbilities))
 				dispatch(setPokemonMoves(pokemonsMoves))
 			}

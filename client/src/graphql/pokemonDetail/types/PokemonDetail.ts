@@ -31,6 +31,10 @@ export interface pokemonMoveDamageClass {
 	name: string
 }
 
+export interface pokemonMoveType {
+	name: string
+}
+
 export interface pokemonMoveEffect {
 	pokemon_v2_moveeffecteffecttexts: [{ short_effect: string }]
 }
@@ -39,6 +43,8 @@ export interface pokemonMoveDetail {
 	name: string
 	pp: number
 	power: number | null
+	accuracy: number
+	pokemon_v2_type: pokemonMoveType
 	pokemon_v2_movedamageclass: pokemonMoveDamageClass
 	pokemon_v2_moveeffect: pokemonMoveEffect
 }

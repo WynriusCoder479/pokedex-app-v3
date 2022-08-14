@@ -7,7 +7,7 @@ const NavMenuLinkDesktop = () => {
 	const auth = useAppSelector(state => state.authReducer.auth.isAuthenticated)
 	return (
 		<>
-			<ButtonLink title='PokeDex' to='/' />
+			<ButtonLink title='PokeDex' to='/' type='home' />
 			<Dash />
 			<ButtonLink title='Type calculator' to='/calculator' />
 			{auth && (

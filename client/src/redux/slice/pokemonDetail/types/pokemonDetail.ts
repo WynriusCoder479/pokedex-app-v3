@@ -21,6 +21,17 @@ export interface PokemonMove {
 	level: number
 	pp: number
 	power: number | null
+	accuracy: number
+	type: string
 	damageClass: string
 	effect: string
+}
+
+export interface PokemonStat {
+	hp: number
+	attack: number
+	defense: number
+	special_attack: number
+	special_defense: number
+	speed: number
 }

@@ -21,7 +21,11 @@ const PokemonCard = ({ id, name, image }: pokemonProps) => {
 	return (
 		<Box
 			cursor={'pointer'}
-			width={'200px'}
+			width={{
+				lg: '200px',
+				md: '200px',
+				base: '180px'
+			}}
 			/* bg='white' */
 			border={'solid 4px'}
 			borderColor={'teal'}

@@ -1,4 +1,5 @@
 import {
+	Box,
 	Center,
 	Flex,
 	Grid,
@@ -6,6 +7,7 @@ import {
 	Spinner,
 	useBreakpointValue
 } from '@chakra-ui/react'
+import PokemonData from '../components/pokemonDetail/PokemonData'
 import PokemonInfo from '../components/pokemonDetail/PokemonInfo'
 import { useAppSelector } from '../redux/store/hooks'
 const PokemonDetail = () => {
@@ -35,7 +37,12 @@ const PokemonDetail = () => {
 							</GridItem>
 						</Grid>
 					) : (
-						<PokemonInfo />
+						<Box w={'100%'}>
+							<Center>
+								<PokemonInfo />
+							</Center>
+							<PokemonData />
+						</Box>
 					)}
 				</Center>
 			)}
