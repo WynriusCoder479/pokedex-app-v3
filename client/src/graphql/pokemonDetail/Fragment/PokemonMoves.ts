@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-const POKEMON_MOVE_DETAIL_FRAGMENT = gql`
+export const POKEMON_MOVE_DETAIL_FRAGMENT = gql`
 	fragment pokemonMoveDetail on pokemon_v2_move {
 		name
 		pp

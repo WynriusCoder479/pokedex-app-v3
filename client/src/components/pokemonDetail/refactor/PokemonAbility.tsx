@@ -1,4 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
+import { nameFormat } from '../../../utils/nameFormat'
 
 interface props {
 	name: string
@@ -20,9 +21,7 @@ const PokemonAbility = ({ name, isHidden, effect }: props) => {
 					Name:{' '}
 				</Text>
 
-				<Text fontSize={'1xl'}>
-					{name.charAt(0).toUpperCase() + name.slice(1)}
-				</Text>
+				<Text fontSize={'1xl'}>{nameFormat(name)}</Text>
 			</Flex>
 			<Text fontSize={'1xl'} fontWeight={'bold'}>
 				{isHidden ? 'Hidden Ability' : 'Standard Ability'}

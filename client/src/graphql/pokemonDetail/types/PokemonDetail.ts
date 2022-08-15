@@ -65,3 +65,29 @@ export interface PokemonDetail {
 		pokemon_v2_pokemonmoves: pokemonMove[]
 	}
 }
+
+// =====>
+export interface pokemonMoveMachine {
+	machine_number: number
+}
+
+export interface pokemonMoveMachineDetail {
+	name: string
+	pp: number
+	power: number | null
+	accuracy: number
+	pokemon_v2_type: pokemonMoveType
+	pokemon_v2_movedamageclass: pokemonMoveDamageClass
+	pokemon_v2_moveeffect: pokemonMoveEffect
+	pokemon_v2_machines: pokemonMoveMachine[]
+}
+
+export interface pokemonMoveMachine {
+	pokemon_v2_move: pokemonMoveMachineDetail
+}
+
+export interface PokemonMoveMachineDetail {
+	pokemon_v2_pokemon_by_pk: {
+		pokemon_v2_pokemonmoves: pokemonMoveMachine[]
+	}
+}

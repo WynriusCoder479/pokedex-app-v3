@@ -35,3 +35,14 @@ export interface PokemonStat {
 	special_defense: number
 	speed: number
 }
+
+export interface PokemonMoveMachine {
+	name: string
+	pp: number
+	power: number | null
+	accuracy: number
+	type: string
+	damageClass: string
+	effect: string
+	machineNumber: number
+}

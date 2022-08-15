@@ -3,6 +3,7 @@ import {
 	PokemonAbility,
 	PokemonInfo,
 	PokemonMove,
+	PokemonMoveMachine,
 	PokemonSprites,
 	PokemonStat
 } from './types/pokemonDetail'
@@ -13,6 +14,7 @@ interface PokemonDetail {
 	pokemonStat: PokemonStat
 	pokemonAbilities: PokemonAbility[]
 	pokemnMoves: PokemonMove[]
+	pokemonMovesMachine: PokemonMoveMachine[]
 }
 
 const pokemonDetailSlice = createSlice({
@@ -23,7 +25,8 @@ const pokemonDetailSlice = createSlice({
 			pokemonSprite: {} as PokemonSprites,
 			pokemonStat: {} as PokemonStat,
 			pokemonAbilities: [],
-			pokemnMoves: []
+			pokemnMoves: [],
+			pokemonMovesMachine: []
 		} as PokemonDetail,
 		isLoading: true
 	},
@@ -45,6 +48,12 @@ const pokemonDetailSlice = createSlice({
 		},
 		setPokemonMoves: (state, action: PayloadAction<PokemonMove[]>) => {
 			state.pokemonDetail.pokemnMoves = action.payload
+		},
+		setPokemonMovesMachine: (
+			state,
+			action: PayloadAction<PokemonMoveMachine[]>
+		) => {
+			state.pokemonDetail.pokemonMovesMachine = action.payload
 		}
 	}
 })
@@ -55,6 +64,7 @@ export const {
 	setPokemonSprites,
 	setPokemonStat,
 	setPokemonAbilities,
-	setPokemonMoves
+	setPokemonMoves,
+	setPokemonMovesMachine
 } = pokemonDetailSlice.actions
 export const pokemonDetailReducer = pokemonDetailSlice.reducer

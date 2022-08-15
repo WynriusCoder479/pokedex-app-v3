@@ -2,19 +2,26 @@ import { useLazyQuery } from '@apollo/client'
 import { createContext, ReactNode, useContext } from 'react'
 import { SEARCH_POKEMON } from '../graphql/pokemon/queries/SearchPokemon'
 import { GET_POKEMON_DETAIL } from '../graphql/pokemonDetail/queries/GetPokemonDetail'
-import { PokemonDetail } from '../graphql/pokemonDetail/types/PokemonDetail'
+import { GET_POKEMON_MOVE_MACHINE } from '../graphql/pokemonDetail/queries/GetPokemonMoveMachine'
+import {
+	PokemonDetail,
+	PokemonMoveMachineDetail
+} from '../graphql/pokemonDetail/types/PokemonDetail'
 import { PokemonSearch } from '../redux/slice/pokemon/types/Pokemons'
 import {
 	setLoading,
 	setPokemonAbilities,
 	setPokemonInfo,
 	setPokemonMoves,
+	setPokemonMovesMachine,
 	setPokemonSprites,
 	setPokemonStat
 } from '../redux/slice/pokemonDetail/pokemonDetailSlice'
 import {
 	PokemonAbility,
 	PokemonMove,
+	PokemonMoveMachine,
+	/* PokemonMoveMachine, */
 	PokemonStat
 } from '../redux/slice/pokemonDetail/types/pokemonDetail'
 import { useAppDispatch } from '../redux/store/hooks'
@@ -44,6 +51,11 @@ const PokemonDetailContextProvider = ({
 		{ pokemon: PokemonSearch },
 		{ name: string }
 	>(SEARCH_POKEMON)
+
+	const [pokemon_move_machine] = useLazyQuery<
+		PokemonMoveMachineDetail,
+		{ id: number }
+	>(GET_POKEMON_MOVE_MACHINE)
 
 	const getPokemonDetail = (id: number, name: string) => {
 		pokemon_detail({
@@ -133,6 +145,38 @@ const PokemonDetailContextProvider = ({
 						shiny: data.pokemon.sprites.front_shiny
 					})
 				)
+			}
+		})
+
+		pokemon_move_machine({
+			context: {
+				clientName: 'pokemonV2'
+			},
+			variables: {
+				id
+			},
+			onCompleted: data => {
+				const pokemonsMovesMachine: PokemonMoveMachine[] = []
+
+				data.pokemon_v2_pokemon_by_pk.pokemon_v2_pokemonmoves.forEach(move => {
+					pokemonsMovesMachine.push({
+						name: move.pokemon_v2_move.name,
+						type: move.pokemon_v2_move.pokemon_v2_type.name,
+						damageClass: move.pokemon_v2_move.pokemon_v2_movedamageclass.name,
+						pp: move.pokemon_v2_move.pp,
+						power: move.pokemon_v2_move.power,
+						accuracy: move.pokemon_v2_move.accuracy,
+						effect: move.pokemon_v2_move.pokemon_v2_moveeffect
+							.pokemon_v2_moveeffecteffecttexts[0]
+							? move.pokemon_v2_move.pokemon_v2_moveeffect
+									.pokemon_v2_moveeffecteffecttexts[0].short_effect
+							: `Move effect haven't been updated`,
+						machineNumber:
+							move.pokemon_v2_move.pokemon_v2_machines[0].machine_number
+					})
+				})
+
+				dispatch(setPokemonMovesMachine(pokemonsMovesMachine))
 			}
 		})
 	}

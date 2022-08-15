@@ -1,4 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
+import { nameFormat } from '../../../utils/nameFormat'
 import PokemonType from './PokemonType'
 
 interface props {
@@ -13,33 +14,33 @@ interface props {
 }
 
 const PokemonMove = ({ ...props }: props) => {
-	const moveNameFormat = (move: string) => {
-		const moveArr = move.replace('-', ' ').split(' ')
-
-		return moveArr
-			.map(element => element.charAt(0).toUpperCase() + element.slice(1))
-			.join(' ')
-	}
 	return (
 		<Box p={'8px'} bg={'teal.400'} rounded={'5px'} my={'5px'}>
-			<Box p={'5px'} m={'5px'} bg={'white'} rounded={'5px'}>
-				<Flex justify={'space-between'}>
+			<Flex
+				p={'5px'}
+				m={'5px'}
+				bg={'white'}
+				rounded={'5px'}
+				justify={'space-between'}>
+				<Box>
 					<Text
 						my={'auto'}
 						fontSize={'2xl'}
 						fontWeight={'bold'}
 						color={'black'}>
-						{moveNameFormat(props.name)}
+						{nameFormat(props.name)}
 					</Text>
+					<Text fontSize={'1xl'} fontWeight={'bold'} color={'black'}>
+						Level-up: {props.level}
+					</Text>
+					<Text fontSize={'1xl'} fontWeight={'bold'} color={'black'}>
+						Class: {props.damageClass}
+					</Text>
+				</Box>
+				<Box my={'auto'}>
 					<PokemonType type={props.type} />
-				</Flex>
-				<Text fontSize={'1xl'} fontWeight={'bold'} color={'black'}>
-					Level-up: {props.level}
-				</Text>
-				<Text fontSize={'1xl'} fontWeight={'bold'} color={'black'}>
-					Class: {props.damageClass}
-				</Text>
-			</Box>
+				</Box>
+			</Flex>
 			<Flex
 				justify={'space-between'}
 				p={'5px'}

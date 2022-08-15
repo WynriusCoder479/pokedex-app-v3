@@ -12,12 +12,12 @@ interface pokemonProps {
 
 const PokemonCard = ({ id, name, image }: pokemonProps) => {
 	const { getPokemonDetail } = usePokemonDetailContext()
-	const isLoading = useAppSelector(
-		state => state.pokemonDetailReducer.isLoading
-	)
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 
+	const currentPokemonId = useAppSelector(
+		state => state.pokemonDetailReducer.pokemonDetail.pokemonInfo.id
+	)
 	return (
 		<Box
 			cursor={'pointer'}
@@ -38,11 +38,15 @@ const PokemonCard = ({ id, name, image }: pokemonProps) => {
 				opacity: '.5'
 			}}
 			onClick={() => {
-				!isLoading && dispatch(setLoading(true))
 				navigate('/pokemon_detail')
-				getPokemonDetail(id, name)
+				const checkCurrentPokemon = currentPokemonId === id
+
+				if (!checkCurrentPokemon) {
+					dispatch(setLoading(true))
+					getPokemonDetail(id, name)
+				}
 			}}>
-			<Text fontSize={'2xl'} /* color={'black'} */>
+			<Text fontSize={'1xl'} /* color={'black'} */>
 				#{id} {name ? name.charAt(0).toUpperCase() + name.slice(1) : name}
 			</Text>
 			<Center>
